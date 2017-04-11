@@ -5,4 +5,7 @@ package com.prolificinteractive.materialcalendarview;
  */
 
 public interface OnArrowClickedListener {
+    void onLeftArrowClicked();
+    
+    void onRightArrowClicked();
 }

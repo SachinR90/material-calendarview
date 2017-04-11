@@ -64,6 +64,7 @@ import java.util.List;
  * 595px wide. The extra 5px are distributed left and right to get to 600px.
  * </p>
  */
+@SuppressWarnings("ResourceType")
 public class MaterialCalendarView extends ViewGroup {
 
     public static final int INVALID_TILE_DIMENSION = -10;
@@ -190,8 +191,14 @@ public class MaterialCalendarView extends ViewGroup {
         @Override
         public void onClick(View v) {
             if (v == buttonFuture) {
+                if (arrowClickedListener != null) {
+                    arrowClickedListener.onRightArrowClicked();
+                }
                 pager.setCurrentItem(pager.getCurrentItem() + 1, true);
             } else if (v == buttonPast) {
+                if (arrowClickedListener != null) {
+                    arrowClickedListener.onLeftArrowClicked();
+                }
                 pager.setCurrentItem(pager.getCurrentItem() - 1, true);
             }
         }
@@ -236,7 +243,17 @@ public class MaterialCalendarView extends ViewGroup {
     private int firstDayOfWeek;
 
     private State state;
-
+    
+    /**
+     * set a callback that will listen to clicks on the direction buttons
+     * @param arrowClickedListener listens to click on direction button
+     */
+    public void setArrowClickedListener(OnArrowClickedListener arrowClickedListener) {
+        this.arrowClickedListener = arrowClickedListener;
+    }
+    
+    private OnArrowClickedListener arrowClickedListener;
+    
     public MaterialCalendarView(Context context) {
         this(context, null);
     }
